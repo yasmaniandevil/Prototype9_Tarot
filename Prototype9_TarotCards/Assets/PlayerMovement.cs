@@ -121,6 +121,11 @@ public class PlayerMovement : MonoBehaviour
                     redCircle.SetActive(true);
                 }
             }
+            else
+            {
+                //rb2D.velocity = Vector2.zero;
+                Debug.Log("player cant move game over");
+            }
         }
     }
 
@@ -147,11 +152,12 @@ public class PlayerMovement : MonoBehaviour
     {
         isGameOver = true;
         ShowGameTextWin();
+       //rb2D.velocity = Vector2.zero;
+        //Debug.Log("player cant move game over");
     }
 
     private void ShowGameTextWin()
     {
-
         {
             gameWonText.gameObject.SetActive(true);
         }

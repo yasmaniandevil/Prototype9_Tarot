@@ -15,10 +15,10 @@ public class Lover1 : MonoBehaviour
     public float minMagnitude = .2f;
     public float maxMagnitude = 1f;
 
-    /*public float minX = -0f;
+    public float minX = -0f;
     public float maxX = 0f;
     public float minY = -0f;
-    public float maxY = 0f;*/
+    public float maxY = 0f;
     
     
     private Vector3 pos;
@@ -39,14 +39,11 @@ public class Lover1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-
-        /*float clampedX = Mathf.Clamp(transform.position.x, minX, maxX);
-        float clampedY = Mathf.Clamp(transform.position.y, minY, maxY);
-        transform.position = new Vector3(clampedX, clampedY, transform.position.z);*/
-        
         Move();
-
+        
+        float clampedX = Mathf.Clamp(transform.position.x, minX, maxX);
+        float clampedY = Mathf.Clamp(transform.position.y, minY, maxY);
+        transform.position = new Vector3(clampedX, clampedY, transform.position.z);
     }
 
     public void Move()

@@ -28,6 +28,8 @@ public class PlayerMovement : MonoBehaviour
     public float activationDistanceYellow = 16f;
 
     private bool isGameOver = false;
+    public TMP_Text gameWonText;
+    
     
     
     // Start is called before the first frame update
@@ -38,6 +40,7 @@ public class PlayerMovement : MonoBehaviour
         //physical forces like when it collides with the sprite it wont spin out of control
         rb2D.isKinematic = true;
         gameOverText.gameObject.SetActive(false);
+        gameWonText.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -45,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!isGameOver)
         {
-            gameOverText.gameObject.SetActive(false);
+            //gameOverText.gameObject.SetActive(false);
             
             float moveHorizontal = Input.GetAxis("Horizontal");
             float moveVertical = Input.GetAxis("Vertical");
@@ -118,7 +121,6 @@ public class PlayerMovement : MonoBehaviour
                     redCircle.SetActive(true);
                 }
             }
-
         }
     }
 
@@ -139,6 +141,20 @@ public class PlayerMovement : MonoBehaviour
         isGameOver = true;
         gameOverText.gameObject.SetActive(true);
         rb2D.isKinematic = true;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        isGameOver = true;
+        ShowGameTextWin();
+    }
+
+    private void ShowGameTextWin()
+    {
+
+        {
+            gameWonText.gameObject.SetActive(true);
+        }
     }
 
     

@@ -9,6 +9,10 @@ public class PlayerMovement : MonoBehaviour
 {
     public float speed;
     private Rigidbody2D rb2D;
+    public float speedBoostAmount = 20f;
+    public float boostCoolDown = 5f;
+    private float lastBoostTime;
+    private bool isBoosting;
 
     private string spriteTag = "Hex";
 
@@ -46,13 +50,44 @@ public class PlayerMovement : MonoBehaviour
             Vector2 movement = new Vector2(moveHorizontal, moveVertical);
         
             movement.Normalize();
-            rb2D.velocity = new Vector2(movement.x * speed, movement.y * speed);
-            
-            
+
+            //check if the player can boost and if the shift key is pressed
+            if (!isBoosting && Time.time - lastBoostTime >= boostCoolDown && Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                float boostedSpeed = speed + speedBoostAmount;
+                
+                //apply speed boost
+                rb2D.velocity = new Vector2(movement.x * boostedSpeed, 
+                    movement.y * boostedSpeed);
+                isBoosting = true;
+                lastBoostTime = Time.time;
+                
+                Debug.Log("is boosting");
+                //Debug.Log(isBoosting);
+                Debug.Log("Speed Amount:  " +  speed);
+                Debug.Log("BoostedSpeed: " + boostedSpeed);
+            }
+            else
+            {
+                //apply regular movement
+                rb2D.velocity = new Vector2(movement.x * speed, movement.y * speed);
+                Debug.Log("Regular Movement");
+                
+            }
+
+            if (isBoosting && Time.time - lastBoostTime >= boostCoolDown)
+            {
+                isBoosting = false;
+                Debug.Log("boost complete");
+                Debug.Log("lastBoostTime:" + lastBoostTime);
+                Debug.Log("boostCoolDown" + boostCoolDown);
+            }
+
+
             if (lover != null)
             {
                 float distance = Vector2.Distance(transform.position, lover.transform.position);
-                Debug.Log(distance);
+                //Debug.Log(distance);
                 if (distance > maxDistance)
                 {
                     // Player is too far away, trigger game over
@@ -88,10 +123,10 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag(spriteTag))
         {
-            Debug.Log("collided");
+            //Debug.Log("collided");
             //collision.gameObject.GetComponent<Renderer>().enabled = false;
             Destroy(collision.gameObject);
-            Debug.Log("destroy");
+            //Debug.Log("destroy");
         }
         
     }

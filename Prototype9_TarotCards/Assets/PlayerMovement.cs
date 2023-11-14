@@ -37,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
         //allows detection to happen but prevents it from responding to
         //physical forces like when it collides with the sprite it wont spin out of control
         rb2D.isKinematic = true;
+        gameOverText.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -44,6 +45,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!isGameOver)
         {
+            gameOverText.gameObject.SetActive(false);
+            
             float moveHorizontal = Input.GetAxis("Horizontal");
             float moveVertical = Input.GetAxis("Vertical");
 
